@@ -12,7 +12,7 @@ function App() {
     <div className='App'>
 
  
-    <Form />
+    <Post />
     </div>
    
   )
