@@ -51,7 +51,9 @@ export const postReducer =(state,action) =>{
                 error:true,
                 loading:false,
                 post:{}
-            }    
+            }
+        default:
+            return state    
     }
 }
 

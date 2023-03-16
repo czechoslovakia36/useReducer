@@ -1,57 +1,67 @@
 import React, { useReducer, useRef, useState } from "react";
 
 import '../form.css'
+import { formReducer } from "../postContext/formReducer";
+import { INITIAL_STATE } from "../postContext/formReducer";
 
 
 const Form = () => {
 
+
 //   USING USESTATE
 
-  const [product, setProduct] = useState({
-    title: "",
-    desc: "",
-    price: 0,
-    category: "",
-    tags: [],
-    images: {
-      sm: "",
-      md: "",
-      lg: "",
-    },
-    quantity: 0,
-  });
+  // const [product, setProduct] = useState({
+  //   title: "",
+  //   desc: "",
+  //   price: 0,
+  //   category: "",
+  //   tags: [],
+  //   images: {
+  //     sm: "",
+  //     md: "",
+  //     lg: "",
+  //   },
+  //   quantity: 0,
+  // });
 
-  const handleChange = (e) => {
-    setProduct((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  // const handleChange = (e) => {
+  //   setProduct((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // };
 
-  const tagRef = useRef();
+  // const tagRef = useRef();
 
-  const handleTags = () => {
-    const tags = tagRef.current.value.split(",");
-    tags.forEach((tag) => {
-      setProduct((prev) => ({ ...prev, tags: [...prev.tags, tag] }));
-    });
-  };
+  // const handleTags = () => {
+  //   const tags = tagRef.current.value.split(",");
+  //   tags.forEach((tag) => {
+  //     setProduct((prev) => ({ ...prev, tags: [...prev.tags, tag] }));
+  //   });
+  // };
 
-  const handleRemoveTag = (tag) => {
-    setProduct((prev) => ({
-      ...prev,
-      tags: prev.tags.filter((t) => t !== tag),
-    }));
-  };
+  // const handleRemoveTag = (tag) => {
+  //   setProduct((prev) => ({
+  //     ...prev,
+  //     tags: prev.tags.filter((t) => t !== tag),
+  //   }));
+  // };
 
-  const handleIncrease = () => {
-    setProduct((prev) => ({ ...prev, quantity: prev.quantity + 1 }));
-  };
+  // const handleIncrease = () => {
+  //   setProduct((prev) => ({ ...prev, quantity: prev.quantity + 1 }));
+  // };
 
-  const handleDecrease = () => {
-      setProduct((prev) => ({
-        ...prev,
-        quantity: prev.quantity - 1,
-      }));
-  };
+  // const handleDecrease = () => {
+  //     setProduct((prev) => ({
+  //       ...prev,
+  //       quantity: prev.quantity - 1,
+  //     }));
+  // };
 
+  const[state,dispatch]= useReducer(formReducer,INITIAL_STATE)
+
+  const handleChange = e => {
+    dispatch({type:"CHANGE_INPUT",
+    payload:{name:e.target.name,value:e.target.value}
+  })
+  }
 
 
 
@@ -96,7 +106,7 @@ const Form = () => {
           Add Tags
         </button>
         <div className="tags">
-          {product.tags.map((tag) => (
+          {state.tags.map((tag) => (
             <small key={tag} onClick={() => handleRemoveTag(tag)}>
               {tag}
             </small>
@@ -106,7 +116,7 @@ const Form = () => {
           <button type="button" onClick={handleDecrease}>
             -
           </button>
-          <span>Quantity ({product.quantity})</span>
+          <span>Quantity ({state.quantity})</span>
           <button type="button" onClick={handleIncrease}>
             +
           </button>
